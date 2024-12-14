@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenditure Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1e5db6;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .prediction-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .prediction-item {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .prediction-item span {
+            font-weight: bold;
+            color: #2575fc;
+        }
+
+        .prediction-item p {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .prediction-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Predict Expenditure</h1>
+        <form action="/predict" method="POST">
+            <label for="food">Food: </label><input type="text" name="food" required><br>
+            <label for="transport">Transport: </label><input type="text" name="transport" required><br>
+            <label for="clothing">Clothing: </label><input type="text" name="clothing" required><br>
+            <label for="groceries">Groceries: </label><input type="text" name="groceries" required><br>
+            <label for="health">Health: </label><input type="text" name="health" required><br>
+            <label for="personal">Personal: </label><input type="text" name="personal" required><br>
+            <label for="miscellaneous">Miscellaneous: </label><input type="text" name="miscellaneous" required><br>
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            <div class="prediction-list">
+                {% for key, value in prediction_text.items() %}
+                <div class="prediction-item">
+                    <span>{{ key.capitalize() }}:</span>
+                    <p>Rs. {{ value }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
